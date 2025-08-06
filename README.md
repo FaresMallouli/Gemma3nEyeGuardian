@@ -48,17 +48,17 @@ This code directly validates that our demo is not faked and that we are using Ge
 
 ### Design Philosophy: "Fail-Safe" by Default
 
-A core principle of EyeGuardian is to **"fail safe"**—prioritizing user safety above all else. This philosophy guided our implementation of the voice check-in feature.
+A core principle of EyeGuardian is to **"fail safe"** prioritizing user safety above all else. This philosophy guided our implementation of the voice check-in feature.
 
-*   **Gemma 3n is 100% Offline:** The core AI logic—analyzing video frames and classifying text with Gemma 3n—is performed entirely on-device and requires no internet.
+*   **Gemma 3n is 100% Offline:** The core AI logic—analyzing video frames and classifying text with Gemma 3n is performed entirely on-device and requires no internet.
 
-*   **The Voice Check-in Trade-off:** The interactive check-in currently uses Android's built-in `SpeechRecognizer` service. While reliable, this service often requires an internet connection for the highest accuracy. This presents a challenge for users who are either unable to be online or who prefer not to use cloud-based recognition for privacy reasons.
+*   **The Voice Check-in Trade-off:** The interactive check-in currently uses Android's built-in `SpeechRecognizer` service. While reliable, this service often requires an internet connection for the highest accuracy. This presents a challenge for users who are either unable to be online or who prefer not to use cloud based recognition for privacy reasons.
 
 *   **Our Safety-First Solution:** We have engineered the system to treat **any failure or ambiguity in the voice check-in process as a potential emergency.** This directly addresses both key scenarios:
     1.  **For users without internet:** If the `SpeechRecognizer` service cannot be reached, the system doesn't wait.
     2.  **For users who value absolute privacy:** If a user has disabled network access, the result is the same.
 
-    In all cases where a clear, positive response is not received—whether due to no internet, background noise, or an unintelligible reply—the app defaults to the safest possible action: **it immediately escalates to `CODE_RED` and sends the alert.**
+    In all cases where a clear, positive response is not received whether due to no internet, background noise, or an unintelligible reply the app defaults to the safest possible action: **it immediately escalates to `CODE_RED` and sends the alert.**
 
 This ensures that we never risk a "false negative" (missing a real emergency). **The safety of the user is the primary, non-negotiable objective.**
 
