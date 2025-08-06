@@ -53,22 +53,23 @@ To help judges navigate our repository, here is a map of the most important file
 ```
 Gemma3nEyeGuardian/
 └── app/
-    ├── build.gradle.kts # 📦 DEPENDENCIES: Declares the MediaPipe and CameraX libraries.
-    │
-    └── src/main/
-        ├── java/com/example/eyeguardian/
-        │   ├── helpers/
-        │   │   └── Gemma3nHelper.kt  # 🧠 CORE AI LOGIC: All Gemma 3n interaction.
-        │   │
-        │   ├── MainActivity.kt       # The main user setup screen.
-        │   └── VideoAnalysisActivity.kt # 🎬 ORCHESTRATOR: The real-time monitoring screen.
-        │
-        ├── res/
-        │   ├── layout/               # UI layout files for all screens.
-        │   └── values/
-        │       └── strings.xml       # Contains all user-facing text and the AI prompts.
-        │
-        └── AndroidManifest.xml       # Declares required permissions (Camera, SMS, Audio).
+    └── src/
+        └── main/
+            ├── java/com/example/eyeguardian/
+            │   ├── helpers/
+            │   │   ├── AppPreferences.kt # Manages saving user settings
+            │   │   └── Gemma3nHelper.kt  # 🧠 CORE AI LOGIC - All Gemma 3n interaction is here
+            │   ├── BaseActivity.kt       # Handles language switching for all screens
+            │   ├── MainActivity.kt       # The main configuration and user setup screen
+            │   └── VideoAnalysisActivity.kt # The real-time monitoring screen (Camera, TTS, STT)
+            │
+            ├── res/
+            │   ├── layout/               # XML files for UI design
+            │   ├── values/
+            │   │   └── strings.xml       # Contains all user-facing text, including AI prompts
+            │   └── raw/                  # (If you bundle a model, it would go here)
+            │
+            └── AndroidManifest.xml       # Declares permissions (Camera, SMS) and activities
 ```
 
 ## 🚀 Getting Started (For Developers)
