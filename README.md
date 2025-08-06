@@ -46,6 +46,21 @@ suspend fun analyzeTextResponse(userResponse: String): String {
 
 This code directly validates that our demo is not faked and that we are using Gemma 3n for both advanced vision and text understanding tasks, entirely on-device.
 
+### Design Philosophy: "Fail-Safe" by Default
+
+A core principle of EyeGuardian is to **"fail safe"**—prioritizing user safety above all else. This philosophy guided our implementation of the voice check-in feature.
+
+*   **Gemma 3n is 100% Offline:** The core AI logic—analyzing video frames and classifying text with Gemma 3n—is performed entirely on-device and requires no internet.
+
+*   **The Voice Check-in Trade-off:** The interactive check-in currently uses Android's built-in `SpeechRecognizer` service. While reliable, this service often requires an internet connection for the highest accuracy. For users who cannot be online or prefer not to use cloud-based recognition, this presents a challenge.
+
+*   **Our Safety-First Solution:** We have engineered the system to treat **any failure or ambiguity in the voice check-in process as a potential emergency.** As shown in the `onError` and `onResults` callbacks in `VideoAnalysisActivity.kt`, if a clear, positive response is not received—whether due to no internet, background noise, or an unintelligible reply—the app will escalate to `CODE_RED` and send the alert.
+
+This ensures that we never risk a "false negative" (missing a real emergency) due to a connectivity issue. **The safety of the user is the primary, non-negotiable objective.**
+
+---
+
+
 ## 📂 Project Structure
 
 To help judges navigate our repository, here is a map of the most important files.
@@ -72,6 +87,20 @@ Gemma3nEyeGuardian/
             └── AndroidManifest.xml       # Declares permissions (Camera, SMS) and activities
 ```
 
+### Future Roadmap: Towards Fully On-Device Audio with MediaPipe
+
+Our choice to use Android's native STT was a deliberate, strategic decision based on the current state of the on-device AI ecosystem. We built EyeGuardian with the future in mind.
+
+Our app uses Gemma's powerful image analysis to understand the scene by processing frames. For the voice check-in, we currently use Google's STT because full on-device audio support for models like Gemma in frameworks like MediaPipe is still evolving.
+
+Our application architecture is specifically designed to be modular. As soon as MediaPipe's support for Gemma's audio modalities matures, we can seamlessly replace the current STT component with a fully on-device solution.
+
+This will unlock even more powerful capabilities, such as:
+*   **True 100% Offline Operation:** Complete independence from internet connectivity for all features.
+*   **Advanced Audio Analysis:** Going beyond simple transcription to analyze the *tone* of voice (e.g., detecting stress or pain).
+*   **Movement & Sound Correlation:** Capturing movement and conducting in-depth audio analysis to better distinguish between a real fall and a harmless loud noise from a TV.
+
+By starting with a robust, fail-safe system today, we have built the perfect foundation to incorporate these next-generation on-device features tomorrow.
 ## 🚀 Getting Started (For Developers)
 
 Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
