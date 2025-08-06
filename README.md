@@ -90,20 +90,25 @@ Gemma3nEyeGuardian/
 ```
 ---
 
-### Future Roadmap: Towards Fully On-Device Audio with MediaPipe
+### Future Roadmap: Evolving with Gemma & MediaPipe
 
-Our choice to use Android's native STT was a deliberate, strategic decision based on the current state of the on-device AI ecosystem. We built EyeGuardian with the future in mind.
+Our choice to use Android's native STT and to analyze individual image frames was a deliberate, strategic decision based on the current, most stable features of the on-device AI ecosystem. We built EyeGuardian with the future in mind.
 
-Our app uses Gemma's powerful image analysis to understand the scene by processing frames. For the voice check-in, we currently use Google's STT because full on-device audio support for models like Gemma in frameworks like MediaPipe is still evolving.
+Our app currently uses Gemma's powerful image analysis to understand the scene by processing static frames. This is because full, real-time **video** and **audio** stream support for models like Gemma in frameworks like MediaPipe is still evolving.
 
-Our application architecture is specifically designed to be modular. As soon as MediaPipe's support for Gemma's audio modalities matures, we can seamlessly replace the current STT component with a fully on-device solution.
+Our application architecture is specifically designed to be modular. As the on-device toolchain matures, we can seamlessly upgrade our core components.
 
-This will unlock even more powerful capabilities, such as:
-*   **True 100% Offline Operation:** Complete independence from internet connectivity for all features.
-*   **Advanced Audio Analysis:** Going beyond simple transcription to analyze the *tone* of voice (e.g., detecting stress or pain).
-*   **Movement & Sound Correlation:** Capturing movement and conducting in-depth audio analysis to better distinguish between a real fall and a harmless loud noise from a TV.
+**Upcoming Enhancements:**
 
-By starting with a robust, fail-safe system today, we have built the perfect foundation to incorporate these next-generation on-device features tomorrow.
+1.  **Fully On-Device Audio Analysis:** As soon as MediaPipe's support for Gemma's audio modalities is production-ready, we will replace the current STT component. This will unlock:
+    *   **True 100% Offline Operation:** Complete independence from internet connectivity.
+    *   **Advanced Audio Understanding:** Going beyond simple transcription to analyze the *tone* of voice (e.g., detecting stress or pain).
+
+2.  **On-Device Video Stream Analysis:** The next major leap will be to move from single-frame analysis to processing video streams directly. This will enable:
+    *   **True Motion Detection:** The model will be able to understand the *action* of falling, rather than just the state of being on the floor.
+    *   **Movement & Sound Correlation:** By processing both video and audio streams simultaneously, the AI could accurately distinguish between a person falling (`CODE_RED`) and a person simply lying on the floor to exercise while music is playing (`CODE_GREEN`).
+
+By starting with a robust, fail-safe system today, we have built the perfect foundation to incorporate these next-generation on-device features tomorrow, making EyeGuardian an even more intelligent and reliable guardian.
 
 ---
 ## 🚀 Getting Started (For Developers)
