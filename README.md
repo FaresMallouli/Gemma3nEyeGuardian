@@ -1,7 +1,7 @@
 # EyeGuardian: Your On-Device AI Safety Net
 
 [![Video Demo](https://img.shields.io/badge/Watch-Video%20Demo%20(3%20min)-red?style=for-the-badge&logo=youtube)](https://YOUR_YOUTUBE_OR_VIDEO_LINK_HERE)
-[![Latest Release](https://img.shields.io/github/v/release/FaresMallouli/Gemma3nEyeGuardian?label=Download%20Latest%20APK&style=for-the-badge)](https://github.com/FaresMallouli/Gemma3nEyeGuardian/releases/latest)
+[![Download APK](https://img.shields.io/github/v/release/FaresMallouli/Gemma3nEyeGuardian?label=Download%20Latest%20APK&style=for-the-badge)](https://github.com/FaresMallouli/Gemma3nEyeGuardian/releases/download/v1.0.0/EyeGuardianApp.apk)
 
 **EyeGuardian is an offline-first, multimodal safety monitor built for the Google Gemma 3n Impact Challenge. It transforms a standard Android phone into a proactive guardian that can detect falls and automatically call for help, without needing an internet connection.**
 
