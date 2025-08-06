@@ -52,13 +52,15 @@ A core principle of EyeGuardian is to **"fail safe"**—prioritizing user safety
 
 *   **Gemma 3n is 100% Offline:** The core AI logic—analyzing video frames and classifying text with Gemma 3n—is performed entirely on-device and requires no internet.
 
-*   **The Voice Check-in Trade-off:** The interactive check-in currently uses Android's built-in `SpeechRecognizer` service. While reliable, this service often requires an internet connection for the highest accuracy. For users who cannot be online or prefer not to use cloud-based recognition, this presents a challenge.
+*   **The Voice Check-in Trade-off:** The interactive check-in currently uses Android's built-in `SpeechRecognizer` service. While reliable, this service often requires an internet connection for the highest accuracy. This presents a challenge for users who are either unable to be online or who prefer not to use cloud-based recognition for privacy reasons.
 
-*   **Our Safety-First Solution:** We have engineered the system to treat **any failure or ambiguity in the voice check-in process as a potential emergency.** As shown in the `onError` and `onResults` callbacks in `VideoAnalysisActivity.kt`, if a clear, positive response is not received—whether due to no internet, background noise, or an unintelligible reply—the app will escalate to `CODE_RED` and send the alert.
+*   **Our Safety-First Solution:** We have engineered the system to treat **any failure or ambiguity in the voice check-in process as a potential emergency.** This directly addresses both key scenarios:
+    1.  **For users without internet:** If the `SpeechRecognizer` service cannot be reached, the system doesn't wait.
+    2.  **For users who value absolute privacy:** If a user has disabled network access, the result is the same.
 
-This ensures that we never risk a "false negative" (missing a real emergency) due to a connectivity issue. **The safety of the user is the primary, non-negotiable objective.**
+    In all cases where a clear, positive response is not received—whether due to no internet, background noise, or an unintelligible reply—the app defaults to the safest possible action: **it immediately escalates to `CODE_RED` and sends the alert.**
 
----
+This ensures that we never risk a "false negative" (missing a real emergency). **The safety of the user is the primary, non-negotiable objective.**
 
 
 ## 📂 Project Structure
@@ -86,6 +88,7 @@ Gemma3nEyeGuardian/
             │
             └── AndroidManifest.xml       # Declares permissions (Camera, SMS) and activities
 ```
+---
 
 ### Future Roadmap: Towards Fully On-Device Audio with MediaPipe
 
@@ -101,6 +104,8 @@ This will unlock even more powerful capabilities, such as:
 *   **Movement & Sound Correlation:** Capturing movement and conducting in-depth audio analysis to better distinguish between a real fall and a harmless loud noise from a TV.
 
 By starting with a robust, fail-safe system today, we have built the perfect foundation to incorporate these next-generation on-device features tomorrow.
+
+---
 ## 🚀 Getting Started (For Developers)
 
 Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
