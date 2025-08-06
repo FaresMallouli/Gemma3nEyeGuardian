@@ -50,7 +50,7 @@ This code directly validates that our demo is not faked and that we are using Ge
 
 A core principle of EyeGuardian is to **"fail safe"** prioritizing user safety above all else. This philosophy guided our implementation of the voice check-in feature.
 
-*   **Gemma 3n is 100% Offline:** The core AI logic—analyzing video frames and classifying text with Gemma 3n is performed entirely on-device and requires no internet.
+*   **Gemma 3n is 100% Offline:** The core AI logic analyzing video frames and classifying text with Gemma 3n is performed entirely on-device and requires no internet.
 
 *   **The Voice Check-in Trade-off:** The interactive check-in currently uses Android's built-in `SpeechRecognizer` service. While reliable, this service often requires an internet connection for the highest accuracy. This presents a challenge for users who are either unable to be online or who prefer not to use cloud based recognition for privacy reasons.
 
