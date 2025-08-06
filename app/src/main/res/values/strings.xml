@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">EyeGuardian</string>
+
+    <!-- MainActivity UI -->
+    <string name="main_emergency_contact_hint">Emergency Contact Phone Number</string>
+    <string name="main_ai_instructions_hint">AI Instructions (e.g., Alzheimer\'s patient)</string>
+    <string name="main_button_save_settings">Save Settings</string>
+    <string name="main_button_select_model_default">Select Gemma Model File</string>
+    <string name="main_button_select_model_selected">Model: %s</string>
+    <string name="main_button_start_monitoring">Start Monitoring</string>
+
+    <!-- MainActivity Toasts & Errors -->
+    <string name="toast_permissions_granted">Permissions granted!</string>
+    <string name="toast_permissions_required">Camera, SMS and Audio permissions are required.</string>
+    <string name="toast_model_selected">Model file selected</string>
+    <string name="toast_failed_to_get_permission">Failed to get permission for file.</string>
+    <string name="toast_settings_saved">Settings saved!</string>
+    <string name="error_invalid_phone_number">Please enter a valid phone number</string>
+    <string name="toast_select_model_first">Please select a Gemma model file first.</string>
+    <string name="toast_save_contact_first">Please save an emergency contact first.</string>
+    <string name="toast_audio_permission_required">Audio Recording permission is required.</string>
+
+    <!-- VideoAnalysisActivity UI & Status -->
+    <string name="status_initializing">Initializing...</string>
+    <string name="status_initializing_model">Initializing Model...</string>
+    <string name="status_model_loaded">Model Loaded. Starting Camera...</string>
+    <string name="status_monitoring_all_clear">Monitoring: All Clear</string>
+    <string name="status_checking_in">CHECKING IN…</string>
+    <string name="status_critical_help_requested">CRITICAL: HELP REQUESTED</string>
+    <string name="alert_title_critical">CRITICAL ALERT</string>
+    <string name="alert_description_critical_event">A critical event has been detected. Help has been requested.</string>
+    <string name="alert_title_unusual_situation">UNUSUAL SITUATION</string>
+    <string name="alert_description_checking_in">Checking in with user...</string>
+
+    <!-- VideoAnalysisActivity Toasts & Errors -->
+    <string name="toast_critical_data_missing">Critical data missing. Closing analysis.</string>
+    <string name="error_tts_init_failed">TTS engine failed to initialize.</string>
+    <string name="error_tts_lang_not_supported">TTS ERROR: Language \'%s\' not supported. Falling back to US English.</string>
+    <string name="error_initialization_failed">Initialization failed: %s</string>
+    <string name="error_camera_binding_failed">Camera binding failed: %s</string>
+    <string name="error_sms_permission_not_granted">SMS permission not granted.</string>
+    <string name="error_sms_sending_failed">SMS sending failed: %s</string>
+    <string name="toast_sms_alert_sent">SMS Alert Sent!</string>
+
+    <!-- TTS & STT Interaction -->
+    <string name="tts_check_in_prompt">An unusual situation was detected: %s. Is everything okay?</string>
+    <string name="stt_error_no_match">No speech was understood</string>
+    <string name="stt_error_timeout">No speech was heard</string>
+    <string name="stt_error_permission">Missing RECORD_AUDIO permission</string>
+    <string name="stt_error_unknown">An unknown listening error occurred</string>
+    <string name="escalation_reason_stt_failed">Listening failed: %s.</string>
+    <string name="escalation_reason_stt_unavailable">Speech-to-Text service not available on device.</string>
+    <string name="escalation_reason_no_clear_response">No clear response received during check-in.</string>
+    <string name="escalation_reason_distress_signal">User responded with a distress signal: \'%s\'</string>
+    <string name="escalation_reason_analysis_error">Could not analyze user\'s response due to an error.</string>
+
+    <!-- SMS Alert Message -->
+    <string name="sms_alert_escalated">CRITICAL ALERT from EyeGuardian. Initial issue detected: \'%1$s\'. Final confirmation: \'%2$s\'.</string>
+    <string name="sms_alert_direct">CRITICAL ALERT from EyeGuardian. A potential emergency has been detected. Issue: \'%s\'.</string>
+
+    <!-- LLM Prompts -->
+    <string name="llm_vision_prompt_base">You are a Critical Incident Detector. Your task is to identify the most likely critical health or safety issue in the image.
+        Your response MUST follow the format: CODE | ISSUE_LABEL
+        The ISSUE_LABEL must be a concise, 4-6 word description of the PROBLEM you have identified. Do not describe the image, describe the critical event.
+
+        - If you detect a fall or a person on the ground in a non-standard way, use CODE_RED.
+          Example: CODE_RED | Probable Fall: Person on ground.
+        - If you detect signs of a seizure, stroke, or severe pain (e.g., clutching chest, convulsions), use CODE_RED.
+          Example: CODE_RED | Medical Distress: Convulsing on floor.
+        - If the situation is ambiguous but potentially dangerous (e.g., slumped in a chair, not moving for a long time), use CODE_YELLOW.
+          Example: CODE_YELLOW | Unusual Stillness: Person slumped over.
+        - If the person appears safe and normal (e.g., sitting, standing, walking), use CODE_GREEN.
+          Example: CODE_GREEN | Situation appears normal and safe.
+    </string>
+    <string name="llm_vision_prompt_context_suffix">\n\nIMPORTANT CONTEXT: The person has this condition: \'%s\'. Analyze with this in mind. For example, if they have Alzheimer\'s, \'Person near an exit\' could be a CODE_RED event labeled \'Potential Wandering Event\'.</string>
+
+    <string name="llm_text_analysis_prompt">You are an AI safety assistant. A user has given a spoken response to the question \'Is everything okay?\'. Analyze their response provided below. Does it indicate they are fine, or does it signal distress or a need for help? Respond with ONLY the word \'POSITIVE\' if they are okay, or \'NEGATIVE\' if they are not okay or if the response is unclear. User\'s response: </string>
+
+</resources>

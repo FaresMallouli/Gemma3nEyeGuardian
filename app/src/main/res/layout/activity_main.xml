@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- UI Redesign by Gemini (v4 - Model Selection Added) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_background"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
+
+    <!-- Scrollable area for settings and model selection -->
+    <ScrollView
+        android:id="@+id/content_scroll_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_start_analysis"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_logo"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="48dp"
+                android:src="@drawable/eyeguardian_logo" />
+
+            <TextView
+                android:id="@+id/tv_app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="@string/app_name"
+                android:textColor="@color/text_primary"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <!-- Settings Section -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_emergency_contact"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="40dp"
+                android:hint="@string/main_emergency_contact_hint"
+                android:textColorHint="@color/text_secondary"
+                app:boxBackgroundColor="@color/surface_card"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxStrokeColor="@color/brand_dark_teal"
+                app:hintTextColor="@color/brand_dark_teal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_emergency_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:textColor="@color/text_primary" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_user_instructions"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/main_ai_instructions_hint"
+                android:textColorHint="@color/text_secondary"
+                app:boxBackgroundColor="@color/surface_card"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxStrokeColor="@color/brand_dark_teal"
+                app:hintTextColor="@color/brand_dark_teal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_user_instructions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:textColor="@color/text_primary" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/spinner_language"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/spinner_background_redesigned"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
+
+
+            <Button
+                android:id="@+id/btn_save_contact"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/main_button_save_settings"
+                android:textColor="@color/action_secondary_stroke"
+                android:textStyle="bold"
+                app:cornerRadius="16dp"
+                app:strokeColor="@color/action_secondary_stroke"
+                app:strokeWidth="2dp" />
+
+            <!-- ✅ NEW: Model Selection Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32dp"
+                android:text="Choose Your AI Model"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Medium Model Option -->
+            <Button
+                android:id="@+id/btn_download_model_2b"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:text="Download Medium Model (2B)"
+                android:textColor="@color/action_secondary_stroke"
+                app:cornerRadius="16dp"
+                app:strokeColor="@color/action_secondary_stroke" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:gravity="center"
+                android:text="Recommended for general, everyday tasks."
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+            <!-- Hard Model Option -->
+            <Button
+                android:id="@+id/btn_download_model_4b"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:text="Download Heavy Model (4B)"
+                android:textColor="@color/action_secondary_stroke"
+                app:cornerRadius="16dp"
+                app:strokeColor="@color/action_secondary_stroke" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:gravity="center"
+                android:text="For more complex scenes or higher accuracy."
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/surface_input_stroke" />
+
+            <!-- Select Local File Button -->
+            <Button
+                android:id="@+id/btn_select_local_model"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:text="Select Downloaded Model File"
+                android:textAllCaps="false"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Start Analysis Button remains anchored at the bottom -->
+    <Button
+        android:id="@+id/btn_start_analysis"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_margin="24dp"
+        android:backgroundTint="@color/action_start_green"
+        android:text="@string/main_button_start_monitoring"
+        android:textAllCaps="false"
+        android:textColor="@color/text_on_dark_bg"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

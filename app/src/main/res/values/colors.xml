@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        UI Redesign by Gemini
+        A professional, friendly, and accessible color palette based on a teal and off-white theme.
+        This palette is designed for high contrast and a calming user experience.
+    -->
+
+    <!-- Core Brand Colors -->
+    <color name="brand_dark_teal">#2a646a</color>   <!-- For primary text, titles, and key icons -->
+    <color name="brand_medium_teal">#497e81</color> <!-- For secondary actions or accents -->
+    <color name="brand_muted_teal">#8fb9b5</color>  <!-- For subtle highlights or disabled states -->
+    <color name="brand_off_white">#f5f1e6</color>   <!-- The primary background color for a soft, warm feel -->
+
+    <!-- Standard UI Colors -->
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+
+    <!-- Action & Accent Colors -->
+    <!-- These colors are chosen for high visibility and clear user affordance. -->
+    <color name="action_start_green">#2E7D32</color> <!-- A deep, accessible green for the primary "Start" button -->
+    <color name="action_start_green_pressed">#1B5E20</color> <!-- Darker green for pressed state -->
+    <color name="action_secondary_stroke">#2a646a</color> <!-- Dark Teal for outlines on secondary buttons -->
+
+    <!-- Text Colors -->
+    <!-- A clear hierarchy for readability. -->
+    <color name="text_primary">#2a646a</color>       <!-- Dark Teal provides excellent contrast on the off-white background -->
+    <color name="text_secondary">#5C888C</color>     <!-- A slightly lighter teal for hints, and secondary info -->
+    <color name="text_on_dark_bg">#FFFFFF</color>     <!-- Pure white for text on colored buttons or dark surfaces -->
+
+    <!-- Background & Surface Colors -->
+    <color name="surface_background">#f5f1e6</color> <!-- The main app background -->
+    <color name="surface_card">#FFFFFF</color>       <!-- White for cards or text fields to make them pop -->
+    <color name="surface_input_stroke">#8fb9b5</color> <!-- Muted Teal for the outline of text fields -->
+
+    <!-- Status & Alert Colors -->
+    <!-- High-contrast, universally understood colors for alerts. -->
+    <!-- RED for Critical Alerts (CODE_RED) -->
+    <color name="alert_red_bg">#C62828</color>       <!-- A strong, deep red for critical alert backgrounds -->
+    <color name="alert_red_text">#FFFFFF</color>     <!-- White text for max readability on red -->
+    <color name="alert_red_icon">#FFFFFF</color>
+
+    <!-- YELLOW for Warnings (CODE_YELLOW) -->
+    <color name="alert_yellow_bg">#FFAB00</color>   <!-- A vibrant, accessible amber/yellow -->
+    <color name="alert_yellow_text">#000000</color>   <!-- Black text ensures readability on yellow -->
+    <color name="alert_yellow_icon">#000000</color>
+
+    <!-- GREEN for All-Clear -->
+    <color name="status_green_bg">#2E7D32</color>      <!-- The same green as the start button for consistency -->
+    <color name="status_green_text">#FFFFFF</color>
+
+</resources>

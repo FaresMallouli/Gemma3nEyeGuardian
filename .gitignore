@@ -1,0 +1,37 @@
+# Fichiers générés par les IDE et les outils
+# =========================================
+
+# Fichiers et dossiers IntelliJ / Android Studio
+.idea/
+*.iml
+modules.xml
+
+# Fichiers de configuration locaux à ne pas partager
+local.properties
+
+# Dossiers et fichiers générés par Gradle
+.gradle/
+build/
+
+# Fichiers générés par la compilation native (C/C++)
+.cxx/
+.externalNativeBuild/
+
+# Fichiers de sortie de build
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+
+# Fichiers de log et de capture
+*.log
+/captures/
+
+# Fichiers Keystore (TRÈS IMPORTANT pour la sécurité)
+# Ne jamais versionner vos clés de signature !
+*.jks
+*.keystore
+
+# Autres fichiers système
+.DS_Store

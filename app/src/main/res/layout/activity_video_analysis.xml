@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- UI Redesign by Gemini -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:fitsSystemWindows="true"
+    tools:context=".VideoAnalysisActivity">
+
+    <!-- Fullscreen Camera Preview as the base layer -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/preview_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Top Status Bar: Clean and clear -->
+    <TextView
+        android:id="@+id/status_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#99000000"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/status_initializing"
+        android:textColor="@color/text_on_dark_bg"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Centered Progress Bar for initial loading -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+
+    <!-- Redesigned Alert Panel for Maximum Clarity -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/alert_panel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/alert_red_bg"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/conversation_scroll_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:cardBackgroundColor="@color/alert_yellow_bg"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/alert_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="20dp"
+                app:tint="@color/alert_red_icon"
+                tools:srcCompat="@drawable/ic_warning_amber"
+                tools:tint="@color/alert_yellow_icon" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/alert_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/alert_red_text"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:text="@string/alert_title_unusual_situation"
+                    tools:textColor="@color/alert_yellow_text" />
+
+                <TextView
+                    android:id="@+id/alert_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/alert_red_text"
+                    android:textSize="16sp"
+                    tools:text="@string/alert_description_checking_in"
+                    tools:textColor="@color/alert_yellow_text" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <!-- Log viewers at the bottom -->
+    <LinearLayout
+        android:id="@+id/logs_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ScrollView
+            android:id="@+id/conversation_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="#A6000000"
+            android:padding="8dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/conversation_log_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#E0E0E0"
+                android:textSize="14sp"
+                tools:text="[10:31:05] APP: Is everything okay?\n[10:31:12] USER: No, help me" />
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/diagnostic_log_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#D9000000"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/diagnostic_log_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:textColor="#81C784"
+                android:textSize="12sp"
+                tools:text="[INFO] Initializing...\n[DEBUG] Copying model file...\n[ERROR] Model loading failed!" />
+        </ScrollView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
