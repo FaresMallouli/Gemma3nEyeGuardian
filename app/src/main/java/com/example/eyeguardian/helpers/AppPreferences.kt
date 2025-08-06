@@ -6,7 +6,7 @@ object AppPreferences {
     private const val PREFS_NAME = "eyeguardian_prefs"
     private const val KEY_EMERGENCY_CONTACT = "emergency_contact_phone"
     private const val KEY_USER_INSTRUCTIONS = "user_instructions"
-    private const val KEY_SELECTED_LANGUAGE = "selected_language_tag" // Key for selected language
+    private const val KEY_SELECTED_LANGUAGE = "selected_language_tag"
 
     private fun getSharedPreferences(context: Context) =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -27,12 +27,11 @@ object AppPreferences {
         return getSharedPreferences(context).getString(KEY_USER_INSTRUCTIONS, null)
     }
 
-    // Functions to save and retrieve the selected language tag (e.g., "en-US")
     fun saveSelectedLanguage(context: Context, languageTag: String) {
         getSharedPreferences(context).edit().putString(KEY_SELECTED_LANGUAGE, languageTag).apply()
     }
 
     fun getSelectedLanguage(context: Context): String? {
-        return getSharedPreferences(context).getString(KEY_SELECTED_LANGUAGE, "en-US") // Default to US English
+        return getSharedPreferences(context).getString(KEY_SELECTED_LANGUAGE, "en-US")
     }
 }

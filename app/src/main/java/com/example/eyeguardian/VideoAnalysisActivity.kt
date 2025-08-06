@@ -2,8 +2,12 @@ package com.example.eyeguardian
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -36,7 +40,6 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 
-// ✅ UPDATED: Inherits from BaseActivity for language switching
 class VideoAnalysisActivity : BaseActivity(), TextToSpeech.OnInitListener, RecognitionListener {
 
     internal enum class AlertState { GREEN, YELLOW, RED }
@@ -47,6 +50,8 @@ class VideoAnalysisActivity : BaseActivity(), TextToSpeech.OnInitListener, Recog
         const val EXTRA_USER_INSTRUCTIONS = "extra_user_instructions"
         const val EXTRA_LANGUAGE_TAG = "extra_language_tag"
         private const val TAG = "VideoAnalysisActivity"
+        private const val ACTION_SMS_SENT = "com.example.eyeguardian.SMS_SENT"
+        private const val ACTION_SMS_DELIVERED = "com.example.eyeguardian.SMS_DELIVERED"
     }
 
     private lateinit var binding: ActivityVideoAnalysisBinding
@@ -69,15 +74,44 @@ class VideoAnalysisActivity : BaseActivity(), TextToSpeech.OnInitListener, Recog
     private val mainHandler = Handler(Looper.getMainLooper())
     private val conversationLog = StringBuilder()
 
+    private val smsSentReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val resultCode = resultCode
+            when (resultCode) {
+                Activity.RESULT_OK -> logToScreen("SMS: Sent successfully.")
+                SmsManager.RESULT_ERROR_GENERIC_FAILURE -> logToScreen("SMS ERROR: Generic failure.")
+                SmsManager.RESULT_ERROR_NO_SERVICE -> logToScreen("SMS ERROR: No service.")
+                SmsManager.RESULT_ERROR_NULL_PDU -> logToScreen("SMS ERROR: Null PDU.")
+                SmsManager.RESULT_ERROR_RADIO_OFF -> logToScreen("SMS ERROR: Radio off.")
+            }
+        }
+    }
+
+    private val smsDeliveredReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (resultCode) {
+                Activity.RESULT_OK -> logToScreen("SMS: Delivered successfully to contact.")
+                Activity.RESULT_CANCELED -> logToScreen("SMS ERROR: Delivery failed or was canceled.")
+            }
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoAnalysisBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // ✅ ADDED: This line keeps the screen on while this activity is active.
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-
         logToScreen("Activity: onCreate")
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(smsSentReceiver, IntentFilter(ACTION_SMS_SENT), RECEIVER_NOT_EXPORTED)
+            registerReceiver(smsDeliveredReceiver, IntentFilter(ACTION_SMS_DELIVERED), RECEIVER_NOT_EXPORTED)
+        } else {
+            registerReceiver(smsSentReceiver, IntentFilter(ACTION_SMS_SENT))
+            registerReceiver(smsDeliveredReceiver, IntentFilter(ACTION_SMS_DELIVERED))
+        }
 
         modelUri = intent.getStringExtra(EXTRA_MODEL_URI)?.let { Uri.parse(it) }
         emergencyContactPhone = intent.getStringExtra(EXTRA_EMERGENCY_CONTACT)
@@ -100,10 +134,10 @@ class VideoAnalysisActivity : BaseActivity(), TextToSpeech.OnInitListener, Recog
 
     override fun onDestroy() {
         super.onDestroy()
+        unregisterReceiver(smsSentReceiver)
+        unregisterReceiver(smsDeliveredReceiver)
 
-        // ✅ ADDED: This line allows the screen to turn off normally again when the activity is closed.
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-
         logToScreen("Activity: onDestroy. Shutting down resources.")
         mainHandler.removeCallbacksAndMessages(null)
         tts?.stop()
@@ -122,7 +156,7 @@ class VideoAnalysisActivity : BaseActivity(), TextToSpeech.OnInitListener, Recog
             val result = tts?.setLanguage(locale)
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 logToScreen(getString(R.string.error_tts_lang_not_supported, languageTag))
-                tts?.language = Locale.US // Fallback to US English
+                tts?.language = Locale.US
             } else {
                 logToScreen("TTS: Engine initialized successfully for language '$languageTag'.")
             }
@@ -444,21 +478,26 @@ class VideoAnalysisActivity : BaseActivity(), TextToSpeech.OnInitListener, Recog
         try {
             val smsManager = SmsManager.getDefault()
 
-            // FLAG_IMMUTABLE is required for apps targeting Android 12 (API 31) and higher.
-            // Your manifest targets API 31, so this is necessary.
             val intentFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             } else {
-                0
+                PendingIntent.FLAG_UPDATE_CURRENT
             }
 
-            val sentPI: PendingIntent = PendingIntent.getBroadcast(this, 0, Intent("SMS_SENT"), intentFlags)
-            val deliveredPI: PendingIntent = PendingIntent.getBroadcast(this, 0, Intent("SMS_DELIVERED"), intentFlags)
+            val sentPI: PendingIntent = PendingIntent.getBroadcast(this, 0, Intent(ACTION_SMS_SENT), intentFlags)
+            val deliveredPI: PendingIntent = PendingIntent.getBroadcast(this, 0, Intent(ACTION_SMS_DELIVERED), intentFlags)
 
-            smsManager.sendTextMessage(emergencyContactPhone, null, message, sentPI, deliveredPI)
+            val parts = smsManager.divideMessage(message)
+            val sentIntents = ArrayList<PendingIntent>()
+            val deliveredIntents = ArrayList<PendingIntent>()
 
-            // The toast and log now more accurately reflect that a dispatch was requested.
-            Toast.makeText(this, getString(R.string.toast_sms_alert_sent), Toast.LENGTH_LONG).show()
+            for (i in parts.indices) {
+                sentIntents.add(sentPI)
+                deliveredIntents.add(deliveredPI)
+            }
+
+            smsManager.sendMultipartTextMessage(emergencyContactPhone, null, parts, sentIntents, deliveredIntents)
+
             logToScreen("SMS: Dispatch request sent to system for $emergencyContactPhone.")
 
         } catch (e: Exception) {

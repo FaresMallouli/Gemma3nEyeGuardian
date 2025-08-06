@@ -17,7 +17,6 @@ import java.io.File
 import java.io.IOException
 
 class Gemma3nHelper(
-    // MODIFIED: Pass context to access string resources
     private val context: Context,
     private val visionAnalysisPrompt: String,
     private val logger: (String) -> Unit
@@ -28,7 +27,6 @@ class Gemma3nHelper(
 
     companion object {
         private const val TAG = "Gemma3nHelper"
-        // REMOVED: TEXT_ANALYSIS_PROMPT is now in strings.xml
     }
 
     @SuppressLint("UnsafeOptInUsageError")
@@ -94,7 +92,6 @@ class Gemma3nHelper(
                 llmInferenceSession = LlmInferenceSession.createFromOptions(llmInference!!, sessionOptions!!)
                 logger("Gemma: New session created for text analysis.")
 
-                // MODIFIED: Fetch prompt from string resources
                 val textAnalysisPrompt = context.getString(R.string.llm_text_analysis_prompt)
                 val fullPrompt = textAnalysisPrompt + userResponse
 

@@ -12,13 +12,11 @@ import androidx.core.content.ContextCompat
 import com.example.eyeguardian.databinding.ActivityMainBinding
 import com.example.eyeguardian.helpers.AppPreferences
 
-// ✅ UPDATED: Now includes logic for the new model selection UI
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var modelUri: Uri? = null
 
-    // ✅ ADDED: URLs for the models
     private val model2bUrl = "https://huggingface.co/google/gemma-3n-E2B-it-litert-preview/tree/main"
     private val model4bUrl = "https://huggingface.co/google/gemma-3n-E4B-it-litert-preview/tree/main"
 
@@ -51,7 +49,6 @@ class MainActivity : BaseActivity() {
                 contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 modelUri = it
                 val fileName = it.path?.substringAfterLast('/')
-                // ✅ UPDATED: Correctly updates the text of the new button
                 binding.btnSelectLocalModel.text = getString(R.string.main_button_select_model_selected, fileName ?: "Selected")
                 Toast.makeText(this, getString(R.string.toast_model_selected), Toast.LENGTH_SHORT).show()
             } catch (e: SecurityException) {
@@ -88,7 +85,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    // ✅ UPDATED: All click listeners are now correctly configured for the new layout
     private fun setupClickListeners() {
         binding.btnSaveContact.setOnClickListener {
             val phoneNumber = binding.etEmergencyContact.text.toString().trim()
@@ -113,17 +109,14 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        // Listener to open browser for the 2B (Medium) model
         binding.btnDownloadModel2b.setOnClickListener {
             openUrlInBrowser(model2bUrl)
         }
 
-        // Listener to open browser for the 4B (Heavy) model
         binding.btnDownloadModel4b.setOnClickListener {
             openUrlInBrowser(model4bUrl)
         }
 
-        // Listener for selecting the local downloaded file
         binding.btnSelectLocalModel.setOnClickListener {
             openDocumentLauncher.launch(arrayOf("*/*"))
         }
@@ -150,7 +143,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    // ✅ ADDED: Helper function to open a URL in the browser
     private fun openUrlInBrowser(url: String) {
         try {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))

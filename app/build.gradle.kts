@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("kotlin-parcelize") // <-- ADD THIS for making data classes Parcelable
+    id("kotlin-parcelize")
 }
 
 android {
