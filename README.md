@@ -76,11 +76,6 @@ Gemma3nEyeGuardian/
 
 Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
 
-### Prerequisites
-
-*   Android Studio installed on your machine.
-*   A physical Android device (API 26+) with at least 4GB of RAM.
-*   A quantized Gemma 3n `.task` model file (e.g., from the Gemma 3n E2B LiteRT Preview).
 
 ### Installation
 
