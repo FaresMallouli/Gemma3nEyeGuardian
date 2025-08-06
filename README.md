@@ -66,8 +66,8 @@ Gemma3nEyeGuardian/
             ├── res/
             │   ├── layout/               # XML files for UI design
             │   ├── values/
-            │   │   └── strings.xml       # Contains all user-facing text, including AI prompts
-            │   └── raw/                  # (If you bundle a model, it would go here)
+            │       └── strings.xml       # Contains all user-facing text, including AI prompts
+            │   
             │
             └── AndroidManifest.xml       # Declares permissions (Camera, SMS) and activities
 ```
